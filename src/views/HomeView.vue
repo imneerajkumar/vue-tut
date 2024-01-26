@@ -24,36 +24,26 @@ import ToDoItem from "../components/ToDoItem.vue";
 export default {
   data() {
     return {
-      todos: [
-        {
-          title: "Task 1",
-          description: "Description 1",
-          done: true,
-        },
-        {
-          title: "Task 2",
-          description: "Description 2",
-          done: false,
-        },
-        {
-          title: "Task 3",
-          description: "Description 3",
-          done: false,
-        },
-      ],
+      todos: localStorage.getItem("todos")
+        ? JSON.parse(localStorage.getItem("todos"))
+        : [],
     };
   },
+
   methods: {
     addItem(newItem) {
       this.todos.push(newItem);
+      localStorage.setItem("todos", JSON.stringify(this.todos));
     },
     deleteItem(item) {
       const index = this.todos.indexOf(item);
       this.todos.splice(index, 1);
+      localStorage.setItem("todos", JSON.stringify(this.todos));
     },
     toggleDone(item) {
       const index = this.todos.indexOf(item);
       this.todos[index].done = !this.todos[index].done;
+      localStorage.setItem("todos", JSON.stringify(this.todos));
     },
   },
 };
